@@ -1,0 +1,54 @@
+.account {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    .account-form {
+        background-color: $color3;
+        padding: 2rem 1.5rem;
+        border-radius: 0.5rem;
+        min-width: 500px;
+
+        &__header {
+            h2 {
+                color: $color1;
+            }
+        }
+        &__inner {
+            margin-top: 30px;
+            form {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                grid-gap: 17px;
+                input {
+                    border-radius: 5px;
+                    font-weight: 500;
+                    // box-shadow: 0 0 3px 2px rgba(#000, .2);
+                    padding: 10px 5px;
+                    background-color: rgba(#888, 0.1);
+                    border: 1px solid rgba(#888, 0.1);
+                    transition: 0.4s ease-in-out;
+
+                    &:focus {
+                        background-color: rgba(#888, 0.25);
+                    }
+                }
+                button {
+                    padding: 10px;
+                    background-color: $color1;
+                    border-radius: 5px;
+                    color: $color3;
+                    font-weight: 600;
+                    font-size: 16px;
+
+                    &:hover {
+                        background-color: lighten($color1, 10%);
+                    }
+                }
+            }
+        }
+    }
+}

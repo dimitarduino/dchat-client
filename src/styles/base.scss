@@ -1,0 +1,152 @@
+$color1: #293241;
+$color2: #ee6c4d;
+$color3: #e0fbfc;
+$color4: #98c1d9;
+$color5: #3d5a80;
+
+:root {
+    --color1: #293241
+}
+
+body {
+    overflow: hidden;
+}
+
+.container-small {
+    padding: 0px 30px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+input, button {
+    border: none;
+    outline: none;
+}
+
+button {
+    cursor: pointer;
+    transition: .4s ease-in-out;
+}
+
+
+.bg-primary {
+    background-color: $color1;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.hover-text-primary {
+    &:hover {
+        color: $color2;
+    }
+}
+
+.text-white {
+    color: white;
+}
+
+// CONTACT BOX
+
+.contact-box {
+    position: relative
+}
+
+.contact-box label {
+    position: absolute;
+    left: 6px;
+    top: 13px;
+    color: #555;
+    z-index: 1;
+    pointer-events: none;
+    transition: .5s all
+}
+
+.contact-box label::before {
+    content: attr(data-dodatok);
+    position: absolute;
+    left: 100%;
+    padding-left: 5px
+}
+
+.contact-box input,
+.contact-box textarea {
+    position: relative;
+    z-index: 1
+}
+
+.contact-box input:focus,
+.contact-box input:valid,
+.contact-box textarea:focus,
+.contact-box textarea:valid {
+    border-color: $color2
+}
+
+.contact-box input:focus~label,
+.contact-box input:valid~label,
+.contact-box textarea:focus~label,
+.contact-box textarea:valid~label {
+    z-index: 2;
+    top: -12px;
+    background-color: white;
+    color: $color2
+}
+
+.contact-box input:focus~label::before,
+.contact-box input:valid~label::before,
+.contact-box textarea:focus~label::before,
+.contact-box textarea:valid~label::before {
+    display: none
+}
+
+.contact-box textarea {
+    height: 140px
+}
+
+.contact-box button {
+    position: relative
+}
+
+.contact-box button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $color2;
+    transform: scaleY(0);
+    transition: .5s transform;
+    transform-origin: top;
+}
+
+.contact-box button span {
+    position: relative;
+    z-index: 2
+}
+
+.contact-box button:hover::before {
+    transform: scaleY(1)
+}
+
+.contact-box button:hover span {
+    color: white
+}
+
+@media screen and (max-width: 800px) {
+    .contact-box button.contact-btn {
+        width: 100%
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .contact-box button.book-btn {
+        width: 100%
+    }
+}
