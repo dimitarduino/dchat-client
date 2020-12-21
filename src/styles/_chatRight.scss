@@ -1,0 +1,164 @@
+.chat-name__edit svg {
+    cursor: pointer;
+}
+.radius-half {
+    border-radius: 50%;
+}
+.chat-right {
+    width: calc(100% - 400px);
+    background-color: #F3F5F9;
+    
+    &__top {
+        // background-color: #FBFDFF;
+        position: relative;
+        z-index: 0;
+        top: 0px;
+        margin-top: 0px;
+        margin-left: 1px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        border-bottom: 1px solid rgba(#777, .3);
+       
+        .chat-name-icon {
+            display: flex;
+            padding-top: 12px;
+            padding-bottom: 12px;
+
+            .chat-icon {
+                display: flex;
+               
+            }
+            .chat-name {
+                margin-left: 10px;
+                display: flex;
+                flex-direction: column;
+                p {}
+                input {
+                    font-size: 19px;
+                    color: #333;
+                    background: transparent;
+                }
+                span {
+                    font-size: 12px;
+                    color: #555;
+                }
+            }
+        }
+
+        .chat-tabs {
+            display: flex;
+            height: auto;
+            .chat-tab {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-left: 10px;
+                padding-right: 10px;
+                position: relative;
+                cursor: pointer;
+                margin-left: 10px;
+
+                p {
+                    font-weight: 500;
+                }
+
+                &:first-of-type {
+                    margin-left: 0px;
+                }
+                &::before {
+                    content: "";
+                    position: absolute;
+                    bottom: 0px;
+                    left: 0px;
+                    width: 100%;
+                    height: 4px;
+                    background-color: $color2;
+                    transform: scaleX(0);
+                    transition: .3s ease-in-out;
+                }
+
+                &:hover,
+                &.active {
+                    &::before {
+                        transform: scaleX(1);
+                    }
+                }
+                
+                &.active {
+                    p {
+                        color: $color2;
+                    }
+                }
+            }
+        }
+    }
+
+    .chat-new {
+        display: flex;
+        flex: 1;
+        // background-color: darken(white, 2%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
+        padding: 6px 6px 11px 6px;
+
+        .newMesasge__form {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            width: calc(100% - 60px);
+
+            button {
+                position: absolute;
+                right: 1rem;
+                background-color: white;
+                outline: none;
+                border: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                // width: 1rem;
+            }
+            input {
+                width: 100%;
+                height: 100%;
+                border-radius: 1rem;
+                box-shadow: 0 2px 2px 1px rgba(#000, .2);
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        .img-pick {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            input {
+                width: 40px;
+                height: 40px;
+                visibility: hidden;
+                position: relative;
+
+                &::before {
+                    cursor: pointer;
+                    content: "\f030";
+                    font-family: "Font Awesome 5 Free";
+                    font-weight: 900;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    visibility: visible;
+                    font-size: 18px;
+                    color: #333;
+                }
+            }
+        }
+    }
+}

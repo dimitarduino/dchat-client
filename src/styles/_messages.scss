@@ -1,0 +1,77 @@
+.chat-messages-wrap {
+    display: flex;
+    flex-direction: column;
+    margin-top: 12px;
+    // margin-bottom: 12px;
+    
+    height: calc(100vh - 62px - 74px - 60px);
+    
+    padding-top: 50px;
+    // padding-bottom: 50px;
+    overflow-y: auto;
+    .chat-one {
+        display: flex;
+        .chat-avatar {
+            .radius-half {
+                border-radius: 50%;
+            }
+        }
+
+        &.me {
+            flex-flow: row-reverse;
+
+            .chat-messages {
+                justify-content: flex-end;
+                align-items: flex-end;
+                margin-right: 12px;
+                margin-left: 0px;
+                .chat-message {
+                    border-radius: 0;
+                    border-bottom-left-radius: 1rem;
+                    background-color: $color2;
+                    color: white;
+                }
+            }
+        }
+
+        .chat-messages {
+            margin-left: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .chat-message {
+                max-width: 300px;
+                word-wrap: break-word;
+                padding: 7px 15px;
+                background-color: white;
+                box-shadow: 0 0px 3px 1px rgba(#000, .1);
+                // border-top-right-radius: 0.5rem;
+                border-bottom-right-radius: 1rem;
+                // border-bottom-left-radius: 0.5rem;
+                margin-top: 10px;
+                p {
+                    font-size: 15px;
+                    // font-family: Arial;
+                }
+                &:first-of-type {
+                    margin-top: 0px;
+                }
+            }
+
+            .chat-time {
+                margin-top: 6px;
+                p {
+                    color: #555;
+                    font-size: 17px;    
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+.chat-avatar {
+    * {
+        font-size: 16px;
+    }
+}
