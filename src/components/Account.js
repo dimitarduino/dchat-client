@@ -3,7 +3,7 @@ import AuthContext from '../context/auth/AuthContext';
 
 export default function Account() {
     //context promenlivi
-    const { logirajSe, registrirajSe, errors, setError } = useContext(AuthContext);
+    const { logirajSe, registrirajSe, errors, setError, sepromenuvaLozinka } = useContext(AuthContext);
 
     //Login promenlivi:
     const [email, setEmail] = useState("");
@@ -46,37 +46,21 @@ export default function Account() {
 
     }
 
-    return (
-        <div className="account-form">
-            <div className="account-form__header">
-                <h2>{loginForm ? 'Најави се' : 'Регистрација'}</h2>
-            </div>
-            <div className="account-form__inner">
-                {
-                    loginForm ? (
-                        <form onSubmit={submitLogin}>
-                            <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Е-mail адреса" type="text" />
-                            <input value={lozinka} onChange={(e) => namestiLozinka(e.target.value)} placeholder="Лозинка" type="password" />
-                            <button type="submit">Најава</button>
+    if (sepromenuvaLozinka === false) {
+        return (
+            <div className="account-form">
+                <div className="account-form__header">
+                    <h2>{loginForm ? 'Најави се' : 'Регистрација'}</h2>
+                </div>
+                <div className="account-form__inner">
+                    {
+                        loginForm ? (
+                            <form onSubmit={submitLogin}>
+                                <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Е-mail адреса" type="text" />
+                                <input value={lozinka} onChange={(e) => namestiLozinka(e.target.value)} placeholder="Лозинка" type="password" />
+                                <button type="submit">Најава</button>
 
-                            <a className="pointer hover-text-primary" onClick={() => { setLoginForm(false); }}>Регистрирај се</a>
-
-                            {
-                                errors && (
-                                    <div className="error-msg">
-                                        <p>{errors}</p>
-                                    </div>
-                                )
-                            }
-                        </form>) : (
-                            <form onSubmit={submitRegister}>
-                                <input value={ime} onChange={(e) => namestiIme(e.target.value)} placeholder="Вашето име" type="text" />
-                                <input value={prezime} onChange={(e) => namestiPrezime(e.target.value)} placeholder="Вашето презиме" type="text" />
-                                <input value={telefon} onChange={(e) => namestiTelefon(e.target.value)} placeholder="Телефонски број" type="text" />
-                                <input value={emailRegister} onChange={(e) => setEmailRegister(e.target.value)} placeholder="Е-mail адреса" type="text" />
-                                <input value={passwordRegister} onChange={(e) => setPasswordRegister(e.target.value)} placeholder="Лозинка" type="password" />
-                                <button type="submit">Регистрирај се</button>
-                                <a className="pointer hover-text-primary" onClick={() => { setLoginForm(true); }}>Најава</a>
+                                <a className="pointer hover-text-primary" onClick={() => { setLoginForm(false); }}>Регистрирај се</a>
 
                                 {
                                     errors && (
@@ -85,10 +69,32 @@ export default function Account() {
                                         </div>
                                     )
                                 }
-                            </form>
-                        )
-                }
+                            </form>) : (
+                                <form onSubmit={submitRegister}>
+                                    <input value={ime} onChange={(e) => namestiIme(e.target.value)} placeholder="Вашето име" type="text" />
+                                    <input value={prezime} onChange={(e) => namestiPrezime(e.target.value)} placeholder="Вашето презиме" type="text" />
+                                    <input value={telefon} onChange={(e) => namestiTelefon(e.target.value)} placeholder="Телефонски број" type="text" />
+                                    <input value={emailRegister} onChange={(e) => setEmailRegister(e.target.value)} placeholder="Е-mail адреса" type="text" />
+                                    <input value={passwordRegister} onChange={(e) => setPasswordRegister(e.target.value)} placeholder="Лозинка" type="password" />
+                                    <button type="submit">Регистрирај се</button>
+                                    <a className="pointer hover-text-primary" onClick={() => { setLoginForm(true); }}>Најава</a>
+
+                                    {
+                                        errors && (
+                                            <div className="error-msg">
+                                                <p>{errors}</p>
+                                            </div>
+                                        )
+                                    }
+                                </form>
+                            )
+                    }
+                </div>
             </div>
-        </div>
-    )
+        )
+    } else {
+        return (
+            <h4 className="text-white">Се зачувува...</h4>
+        )
+    }
 }

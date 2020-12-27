@@ -7,11 +7,11 @@ import AuthContext from '../context/auth/AuthContext'
 
 
 export default function TopMenu() {
-    const { odlogirajSe } = useContext(AuthContext);
+    const { odlogirajSe, promeniLozinka, setChanging, errors, lozinkaPoraka, user } = useContext(AuthContext);
     const [settings, setSettings] = useState(false);
     const [popup, setPopup] = useState(false);
     const [loadingBtn, setLoadingBtn] = useState(false);
-    const [passwords, setPasswords] = useState({
+    const [lozinki, namestiLozinki] = useState({
         oldPassword: "",
         newPassword: "",
         confirmPassword: ""
@@ -23,21 +23,22 @@ export default function TopMenu() {
     }
 
     const handleChange = (e) => {
-        console.log('smenav input');
-        console.log(e.target.value);
         console.log(e.target.name);
-        setSettings({
-            ...settings,
+        namestiLozinki({
+            ...lozinki,
             [e.target.name]: e.target.value
         })
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        console.log('promeni lozinka');
+        setLoadingBtn(true);
+        setChanging(true);
+        var saved = await promeniLozinka(lozinki);
+        setLoadingBtn(false);
     }
 
-    const { oldPassword, newPassword, confirmPassword } = passwords;
+    const { oldPassword, newPassword, confirmPassword } = lozinki;
     
     return (
         <div className="top-menu container-small">
@@ -49,8 +50,8 @@ export default function TopMenu() {
             </div>
             <div className="top-menu__right" onClick={() => setSettings(!settings)}>
                 <div className="user-settings-toggle">
-                    <Avatar className="avatar" size="30" name={`Димитар Кузмановски`} />
-                    <p>Димитар Кузмановски</p>
+                    <Avatar className="avatar" size="30" name={`${user.ime} ${user.prezime}`} />
+                    <p>{user.ime} {user.prezime}</p>
                     <GrFormDown size="24" />
                 </div>
             </div>
@@ -92,6 +93,11 @@ export default function TopMenu() {
                                     <button className="w-100 bg-primary hover-bg-primary-dark text-uppercase hover-text-dark py-20px text-center text-white">
                                         {loadingBtn ? 'Ве молиме почекајте...' : 'Промени лозинка'}
                                     </button>
+                                </div>
+
+                                <div className="error-msg mt-20px">
+                                    {errors ? errors : ''}
+                                    {lozinkaPoraka != "" ? lozinkaPoraka : ""}
                                 </div>
                               
                             </form>

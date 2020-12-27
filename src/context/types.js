@@ -9,3 +9,8 @@ export const SUCCESS_LOGIN = "SUCCESS_LOGIN";
 export const FAIL_LOGIN = "FAIL_LOGINR";
 export const SET_ERROR = "SET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
+
+//Promeni lozinka
+export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";
+export const CHANGE_PASSWORD_ERROR = "CHANGE_PASSWORD_ERROR";
+export const SET_CHANGING = "SET_CHANGING";

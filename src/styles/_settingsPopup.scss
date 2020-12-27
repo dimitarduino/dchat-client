@@ -31,7 +31,11 @@
             }
 
             span {
+                cursor: pointer;
 
+                &:hover {
+                    color: $color2;
+                }
             }
         }
         form {

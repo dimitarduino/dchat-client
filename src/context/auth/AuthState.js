@@ -3,7 +3,7 @@ import axios from '../../axios'
 
 import AuthContext from './AuthContext'
 import authReducer from './AuthReducer'
-import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR } from '../types'
+import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_ERROR, SET_CHANGING } from '../types'
 import { setToken } from '../../help/functions'
 
 const AuthState = props => {
@@ -11,7 +11,9 @@ const AuthState = props => {
         user: null,
         userAuth: null,
         errors: null,
-        users: []
+        users: [],
+        sepromenuvaPassword: false,
+        lozinkaPoraka: ""
     }
 
     const [state, dispatch] = useReducer(authReducer, initState);
@@ -143,18 +145,47 @@ const AuthState = props => {
         }
     }
 
+    const promeniLozinka = async lozinki => {
+        try {
+            const res = await axios.post(`/auth/${state.user._id}`, lozinki);
+
+            dispatch({
+                type: CHANGE_PASSWORD_SUCCESS
+            })
+
+            window.location.reload(false);
+
+        } catch (err) {
+            dispatch({
+                type: CHANGE_PASSWORD_ERROR,
+                payload: err.response.data.err || err.response.data.msg
+            })
+        }
+    }
+
+    const setChanging = (temp) => {
+        dispatch({
+            type: SET_CHANGING,
+            payload: temp
+        })
+    }
+
+
     return (
         <AuthContext.Provider value={{
             user: state.user,
             userAuth: state.userAuth,
             errors: state.errors,
             users: state.users,
+            lozinkaPoraka: state.lozinkaPoraka,
             namestiNajavenKorisnik,
             citajKorisnici,
             logirajSe,
             registrirajSe,
             odlogirajSe,
-            setError
+            setError,
+            promeniLozinka,
+            setChanging
         }}>
             {props.children}
         </AuthContext.Provider>

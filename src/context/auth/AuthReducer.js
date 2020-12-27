@@ -1,4 +1,4 @@
-import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR } from '../types'
+import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, SET_CHANGING,  CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_SUCCESS } from '../types'
 
 export default (state, action) => {
     switch (action.type) {
@@ -14,8 +14,8 @@ export default (state, action) => {
             return {
                 userAuth: null,
                 user: null,
-                changingPassword: false,
-                errors: null
+                sepromenuvaPassword: false,
+                errors: null,
             }
         case FAIL_REGISTER:
         case FAIL_LOGIN:
@@ -26,12 +26,25 @@ export default (state, action) => {
                     ...state,
                     userAuth: null,
                     errors: action.payload,
-                    user: null
+                    user: null,
+                    lozinkaPoraka: ""
                 }
-
             }
-
             break;
+        case CHANGE_PASSWORD_ERROR:
+            return {
+                ...state,
+                errors: action.payload,
+                lozinkaPoraka: ""
+            }
+        case CHANGE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                errors: null,
+                user: action.payload,
+                userAuth: true,
+                lozinkaPoraka: "Лозинката е успешно променета"
+            }
         case SET_ERROR:
             return {
                 ...state,
@@ -48,6 +61,7 @@ export default (state, action) => {
                 userAuth: true,
                 user: action.payload,
                 errors: null,
+                sepromenuvaPassword: false
             }
         case SET_USERS:
             return {
@@ -55,6 +69,12 @@ export default (state, action) => {
                 errors: null,
                 users: action.payload
             }
+        case SET_CHANGING: {
+            return {
+                ...state,
+                sepromenuvaPassword: action.payload
+            }
+        }
 
         default:
             return state;
