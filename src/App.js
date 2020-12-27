@@ -2,18 +2,19 @@ import React from 'react'
 //components
 import Account from './components/Account'
 import Main from './pages/Main'
+import AuthState from './context/auth/AuthState'
+import PrivateRoute from './pages/PrivateRoute'
 
 //styles
 import "./custom.scss"
 
 function App() {
   return (
-    <div className="dchat">
-        <Main />
-      {/* <div className="account bg-primary">
-        <Account/>
-      </div> */}
-    </div>
+    <AuthState>
+        <div className="dchat">
+          <PrivateRoute />
+        </div>
+      </AuthState>
   );
 }
 

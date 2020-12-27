@@ -1,11 +1,13 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 
 import Avatar from 'react-avatar'
 import {MdChat} from 'react-icons/md'
 import { GrFormDown } from 'react-icons/gr'
+import AuthContext from '../context/auth/AuthContext'
 
 
 export default function TopMenu() {
+    const { odlogirajSe } = useContext(AuthContext);
     const [settings, setSettings] = useState(false);
     const [popup, setPopup] = useState(false);
     const [loadingBtn, setLoadingBtn] = useState(false);
@@ -17,7 +19,7 @@ export default function TopMenu() {
 
     //local funkcii
     const logout = () => {
-        console.log('logout');
+        odlogirajSe();
     }
 
     const handleChange = (e) => {
