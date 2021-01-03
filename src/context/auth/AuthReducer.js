@@ -14,7 +14,7 @@ export default (state, action) => {
             return {
                 userAuth: null,
                 user: null,
-                sepromenuvaPassword: false,
+                sepromenuvaLozinka: false,
                 errors: null,
             }
         case FAIL_REGISTER:
@@ -61,7 +61,7 @@ export default (state, action) => {
                 userAuth: true,
                 user: action.payload,
                 errors: null,
-                sepromenuvaPassword: false
+                sepromenuvaLozinka: false
             }
         case SET_USERS:
             return {
@@ -72,7 +72,7 @@ export default (state, action) => {
         case SET_CHANGING: {
             return {
                 ...state,
-                sepromenuvaPassword: action.payload
+                sepromenuvaLozinka: action.payload
             }
         }
 
