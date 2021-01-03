@@ -1,4 +1,4 @@
-import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, SET_CHANGING,  CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_SUCCESS } from '../types'
+import { SET_USER, SET_USERS, SET_NEWCHAT_MSG, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, SET_CHANGING,  CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_SUCCESS } from '../types'
 
 export default (state, action) => {
     switch (action.type) {
@@ -74,6 +74,14 @@ export default (state, action) => {
                 ...state,
                 sepromenuvaPassword: action.payload
             }
+        }
+
+        case SET_NEWCHAT_MSG: 
+        return {
+            ...state,
+            users: [...state.users, action.payload.email],
+            novaGrupaMsg: action.payload.msg,
+            poslednoDodadenMail: action.payload.email
         }
 
         default:

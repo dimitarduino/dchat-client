@@ -1,8 +1,6 @@
 import React from 'react'
-//components
-import Account from './components/Account'
-import Main from './pages/Main'
 import AuthState from './context/auth/AuthState'
+import ChatState from './context/chat/chatState'
 import PrivateRoute from './pages/PrivateRoute'
 
 //styles
@@ -11,10 +9,12 @@ import "./custom.scss"
 function App() {
   return (
     <AuthState>
+      <ChatState>
         <div className="dchat">
           <PrivateRoute />
         </div>
-      </AuthState>
+      </ChatState>
+    </AuthState>
   );
 }
 

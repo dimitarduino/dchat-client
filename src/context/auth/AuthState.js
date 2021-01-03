@@ -3,7 +3,7 @@ import axios from '../../axios'
 
 import AuthContext from './AuthContext'
 import authReducer from './AuthReducer'
-import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_ERROR, SET_CHANGING } from '../types'
+import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_ERROR, SET_CHANGING, SET_NEWCHAT_MSG } from '../types'
 import { setToken } from '../../help/functions'
 
 const AuthState = props => {
@@ -12,8 +12,10 @@ const AuthState = props => {
         userAuth: null,
         errors: null,
         users: [],
-        sepromenuvaPassword: false,
-        lozinkaPoraka: ""
+        sepromenuvaLozinka: false,
+        lozinkaPoraka: "",
+        novaGrupaMsg: "",
+        poslednoDodadenMail: ""
     }
 
     const [state, dispatch] = useReducer(authReducer, initState);
@@ -169,6 +171,29 @@ const AuthState = props => {
             payload: temp
         })
     }
+    const najdiKorisnikPoMail = async email => {
+        try {
+            const res = await axios.get(`/auth/${email}`);
+
+            dispatch({
+                type: SET_NEWCHAT_MSG,
+                payload: {
+                    msg: res.data.msg,
+                    email: res.data.user
+                }
+            })
+        } catch (err) {
+            console.log(err);
+            console.log(err.response);
+            dispatch({
+                type: SET_NEWCHAT_MSG,
+                payload: {
+                    msg: err.response.data.msg,
+                    email: ""
+                }
+            })
+        }
+    }
 
 
     return (
@@ -178,6 +203,9 @@ const AuthState = props => {
             errors: state.errors,
             users: state.users,
             lozinkaPoraka: state.lozinkaPoraka,
+            sepromenuvaLozinka: state.sepromenuvaLozinka,
+            novaGrupaMsg: state.novaGrupaMsg,
+            poslednoDodadenMail: state.poslednoDodadenMail,
             namestiNajavenKorisnik,
             citajKorisnici,
             logirajSe,
@@ -185,7 +213,8 @@ const AuthState = props => {
             odlogirajSe,
             setError,
             promeniLozinka,
-            setChanging
+            setChanging,
+            najdiKorisnikPoMail
         }}>
             {props.children}
         </AuthContext.Provider>
