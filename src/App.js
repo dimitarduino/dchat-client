@@ -7,9 +7,6 @@ import PrivateRoute from './pages/PrivateRoute'
 import "./custom.scss"
 
 function App() {
-  useEffect(() => {
-    alert(process.env.NODE_ENV);
-  })
   return (
     <AuthState>
       <ChatState>

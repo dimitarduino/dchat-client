@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 
 let socket;
 export const inicijalizirajSocket = (grupa) => {
-  socket = io(process.env.REACT_APP_SOCKETS_URL ? process.env.REACT_APP_SOCKETS_URL : 'http://localhost:8080/');
+  socket = io(process.env.NODE_ENV == "production" ? "https://dchat-backend.herokuapp.com/" : 'http://localhost:8080/');
 }
 export const diskonektirajSocket = () => {
   if(socket) socket.disconnect();
