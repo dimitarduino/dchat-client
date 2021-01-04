@@ -8,14 +8,14 @@
     "@testing-library/user-event": "^12.6.0",
     "axios": "^0.21.1",
     "moment": "^2.29.1",
-    "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-avatar": "^3.9.7",
     "react-dom": "^17.0.1",
     "react-icons": "^4.1.0",
     "react-scripts": "4.0.1",
     "socket.io-client": "^3.0.4",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "sass": "^1.32.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -41,7 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "sass": "^1.32.0"
-  }
+  "devDependencies": {}
 }
