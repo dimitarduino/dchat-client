@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 
 let socket;
 export const inicijalizirajSocket = (grupa) => {
-  socket = io('http://localhost:8080/');
+  socket = io(process.env.SOCKETS_URL ? process.env.SOCKETS_URL : 'http://localhost:8080/');
 }
 export const diskonektirajSocket = () => {
   if(socket) socket.disconnect();
