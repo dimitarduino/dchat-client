@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import AuthState from './context/auth/AuthState'
 import ChatState from './context/chat/chatState'
 import PrivateRoute from './pages/PrivateRoute'
@@ -7,6 +7,9 @@ import PrivateRoute from './pages/PrivateRoute'
 import "./custom.scss"
 
 function App() {
+  useEffect(() => {
+    alert(process.env.NODE_ENV);
+  })
   return (
     <AuthState>
       <ChatState>
