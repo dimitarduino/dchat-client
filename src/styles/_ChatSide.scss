@@ -63,6 +63,12 @@
             border-bottom: 1px solid #e9e7e7;
             transition: .4s ease-in-out;
 
+            &.new {
+                .group-right {
+                    color: $color2;
+                }
+            }
+
             &:hover,
             &.active {
                 background-color: white;
@@ -94,9 +100,26 @@
                 }
                 &__bottom {
                     padding-top: 4px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
                     p {
                         color: #666;
                         font-size: 15px;
+                    }
+
+                    span {
+                        width: 20px;
+                        height: 20px;
+                        background-color: $color2;
+                        border-radius: 50%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: white;
+                        font-weight: 500;
+                        font-size: 12px;
+                        font-family: sans-serif;
                     }
                 }
             }

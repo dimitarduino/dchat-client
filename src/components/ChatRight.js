@@ -12,7 +12,6 @@ import Members from './Members';
 //sockets
 import { ispratiPorakaSocket } from '../help/sockets'
 
-
 export default function ChatRight() {
     const [poraka, namestiPoraka] = useState("");
     const [promenlivo, namestiPromenlivo] = useState(false);
@@ -20,7 +19,7 @@ export default function ChatRight() {
     const [imeGrupa, namestiImeGrupa] = useState('Ime na grupa');
 
     //context
-    const { zemiPoraki, novaGrupa, aktivniPoraki, poraki, kreirajPoraka, grupa, izmeniGrupa, namestiNovaGrupa } = useContext(ChatContext);
+    const { zemiPoraki, novaGrupa, aktivniPoraki, poraki, kreirajPoraka, grupa, izmeniGrupa, namestiNovaGrupa, namestiProcitano, namestiProcitanaGrupa } = useContext(ChatContext);
     const { user } = useContext(AuthContext);
 
     //useeffects
@@ -40,7 +39,6 @@ export default function ChatRight() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log('prakjaj poraka');
 
         if (poraka.trim() != "") {
             let daliENovaGrupa = false;
@@ -50,7 +48,6 @@ export default function ChatRight() {
 
             ispratiPorakaSocket(grupa._id, poraka, user._id, kreirajPoraka, grupa.korisnici, daliENovaGrupa);
 
-            console.log(`Dali e nova grupa: ${daliENovaGrupa}`);
             namestiNovaGrupa(false);
             namestiPoraka('');
         }
@@ -63,6 +60,28 @@ export default function ChatRight() {
             namestiPromenlivo(true);
         } else {
             namestiPromenlivo(false);
+        }
+    }
+
+    const namestiProcitaniPoraki = () => {
+        console.log(user._id);
+        let poslednaPoraka = aktivniPoraki[aktivniPoraki.length - 1];
+
+        if (!!poslednaPoraka && !!poslednaPoraka._id) {
+            if (poslednaPoraka.procitanoOd.includes(user._id)) {
+                console.log('vekje ja procital');
+            } else {
+                namestiProcitano(user._id, poslednaPoraka._id);
+            }
+        } else {
+            if (!!poslednaPoraka) {
+                if (grupa) {
+                    console.log('grupa e:');
+                    console.log(grupa);
+                    namestiProcitanaGrupa(grupa._id, user._id);
+                }
+            }
+            console.log('nema nisto');
         }
     }
 
@@ -109,9 +128,9 @@ export default function ChatRight() {
     
                 {
                     tab == 1 && (
-                        <div className="chat-new">
+                        <div onMouseOver={namestiProcitaniPoraki} className="chat-new">
                             <form onSubmit={onSubmit} className="newMesasge__form">
-                                <input value={poraka} onChange={(e) => namestiPoraka(e.target.value)} placeholder="Напиши порака..." type="text" />
+                                <input onChange={namestiProcitaniPoraki} onFocus={namestiProcitaniPoraki} value={poraka} onChange={(e) => namestiPoraka(e.target.value)} placeholder="Напиши порака..." type="text" />
                                 <button>
                                     <RiSendPlane2Line size={23} />
                                 </button>

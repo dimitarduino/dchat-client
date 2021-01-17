@@ -10,7 +10,9 @@ import {
     UPDATE_GROUP,
     SUCCESS_CHANGE_GROUP,
     SET_NEW_GROUP,
-    SUCCESS_DELETE_MESSAGE
+    SUCCESS_DELETE_MESSAGE,
+    SET_SEEN_MESSAGE,
+    SET_SEEN_GROUP
 } from '../types'
 
 export default (state, action) => {
@@ -31,19 +33,33 @@ export default (state, action) => {
             var grupiPredUpdate = state.grupi;
 
             for (let i = 0; i < grupiPredUpdate.length; i++) {
-                if (grupiPredUpdate[i]._id == action.payload) {
+                if (grupiPredUpdate[i]._id == action.payload.grupa) {
                     grupiPredUpdate[i].poslednaPoraka = new Date().getTime();
                 }
             }
 
             const sortiraniGrupiUpdate = grupiPredUpdate.sort((a,b) => (a.poslednaPoraka < b.poslednaPoraka) ? 1 : ((b.poslednaPoraka < a.poslednaPoraka) ? -1 : 0));
 
+            const porakiSoNajnovaId = state.poraki.map(poraka => {
+                if (!poraka._id) {
+                    console.log('nema id');
+                    if (poraka.isprakjac == action.payload.isprakjac && action.payload.sodrzina == poraka.sodrzina) {
+                        console.log('isto e se');
+
+                        poraka._id = action.payload.id;
+                    }
+                }
+
+                return poraka;
+            })
+
             return {
                 ...state,
+                poraki: porakiSoNajnovaId,
                 grupi: sortiraniGrupiUpdate
             }
         case SUCCESS_CHANGE_GROUP:
-            console.log(action.payload);
+            // console.log(action.payload);
             let promenetiGrupi = state.grupi.map(grupa => {
                 if (grupa._id == action.payload._id) {
                     grupa = action.payload;
@@ -52,7 +68,7 @@ export default (state, action) => {
                 return grupa;
             })
 
-            console.log(promenetiGrupi);
+            // console.log(promenetiGrupi);
             return {
                 ...state,
                 grupi: promenetiGrupi,
@@ -119,6 +135,76 @@ export default (state, action) => {
                 ...state,
                 aktivniPoraki: action.payload
             }
+        case SET_SEEN_MESSAGE:
+            let porakiSoSeen = state.poraki;
+            let aktivniSoSeen = state.aktivniPoraki;
+            porakiSoSeen = porakiSoSeen.map(poraka => {
+                if (poraka._id == action.payload.poraka) {
+                    poraka.procitanoOd.push(action.payload.korisnik);
+                }
+
+                return poraka;
+            });
+
+            aktivniSoSeen = aktivniSoSeen.map(poraka => {
+                if (poraka._id == action.payload.poraka) {
+                    poraka.procitanoOd.push(action.payload.korisnik);
+                }
+
+                return poraka;
+            });
+            let promeniGrupi = state.grupi;
+
+            promeniGrupi = promeniGrupi.map(grupa => {
+                if (grupa.korisnici.includes(action.payload.korisnik)) {
+                    grupa.promeni = !grupa.promeni;
+                }
+
+                return grupa;
+            })
+
+            return {
+                ...state,
+                poraki: porakiSoSeen,
+                aktivniPoraki: aktivniSoSeen,
+                grupi: promeniGrupi
+            }
+        case SET_SEEN_GROUP:
+            let procitaniPoraki = state.poraki;
+            let procitaniAktivniPoraki = state.aktivniPoraki;
+
+            procitaniPoraki = procitaniPoraki.map(poraka => {
+                if (poraka.grupa == action.payload.grupa) {
+                    if (poraka.procitanoOd && !poraka.procitanoOd.includes(action.payload.korisnik)) {
+                        //ne e procitana
+                        poraka.procitanoOd.push(action.payload.korisnik);
+                    } else {
+                        console.log('ili e procitana ili nema procitanoOd');
+                    }
+                }
+
+                return poraka;
+            })
+
+            procitaniAktivniPoraki = procitaniAktivniPoraki.map(poraka => {
+                if (poraka.grupa == action.payload.grupa) {
+                    if (poraka.procitanoOd && !poraka.procitanoOd.includes(action.payload.korisnik)) {
+                        //ne e procitana
+                        poraka.procitanoOd.push(action.payload.korisnik);
+                    } else {
+                        console.log('ili e procitana ili nema procitanoOd');
+                    }
+                }
+
+                return poraka;
+            })
+
+            return {
+                ...state,
+                poraki: procitaniPoraki,
+                aktivniPoraki: procitaniAktivniPoraki
+            }
+        break;
         default:
             return state;
     }

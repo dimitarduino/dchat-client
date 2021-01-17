@@ -13,7 +13,9 @@ import {
     ADD_NEW_GROUP,
     UPDATE_GROUP,
     SUCCESS_CHANGE_GROUP,
-    SET_NEW_GROUP
+    SET_NEW_GROUP,
+    SET_SEEN_MESSAGE,
+    SET_SEEN_GROUP
 } from '../types'
 import {setToken} from '../../help/functions'
 
@@ -70,17 +72,29 @@ const ChatState = props => {
             const res = await axios.post('/messages', {
                 grupa, sodrzina, isprakjac
             });
-            console.log('update grupa: ', grupa);
+            console.log(res.data.message._id);
             dispatch({
                 type: UPDATE_GROUP,
-                payload: grupa
+                payload: {grupa, isprakjac, sodrzina, id: res.data.message._id}
             });
         } catch (err) {
         }
     }
 
+    const namestiProcitanaGrupa = (grupa, korisnik) => {
+        dispatch({
+            type: SET_SEEN_GROUP,
+            payload: {grupa, korisnik}
+        })
+    }
+
     const vmetniPoraka = async (poraka) => {
         var { grupa, sodrzina, isprakjac } = poraka;
+        poraka.procitanoOd = [isprakjac];
+
+        console.log(state.poraki);
+        console.log(state.aktivniPoraki);
+        
         dispatch({
             type: SUCCESS_ADD_MESSAGE,
             payload: poraka
@@ -116,7 +130,6 @@ const ChatState = props => {
 
 
     const izmeniGrupa = async (grupaId, ime = null, korisnici = null) => {
-        console.log(korisnici);
         try {
             const res = await axios.post(`/groups/${grupaId}`, {
                 korisnici,
@@ -128,7 +141,6 @@ const ChatState = props => {
                 payload: res.data
             })
         } catch (err) {
-            console.log(err);
             // dispatch({
             //     type: SET_ERROR,
 
@@ -143,8 +155,6 @@ const ChatState = props => {
                 ime
             });
 
-            console.log(res.data);
-
             dispatch({
                 type: ADD_NEW_GROUP,
                 payload: res.data.grupa
@@ -152,12 +162,28 @@ const ChatState = props => {
 
             return true;
         } catch (err) {
-            console.log(err);
-            console.log(err.response);
             let errorMsg = err.response.data.errors[0].msg;
             alert(errorMsg);
 
             return false;
+        }
+    }
+
+    const namestiProcitano = async (korisnik, poraka) => {
+        try {
+            const res = await axios.post(`/messages/${poraka}`, {
+                korisnik,
+                promenaPoraka: "seen"
+            });
+        
+            dispatch({
+                type: SET_SEEN_MESSAGE,
+                payload: {
+                    korisnik, poraka
+                }
+            })
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -173,6 +199,8 @@ const ChatState = props => {
             dodajNovaGrupa,
             izmeniGrupa,
             namestiNovaGrupa,
+            namestiProcitano,
+            namestiProcitanaGrupa,
             error: state.error,
             poraki: state.poraki,
             grupa: state.grupa,

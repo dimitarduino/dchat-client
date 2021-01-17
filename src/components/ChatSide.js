@@ -15,7 +15,7 @@ export default function ChatSide({ poraki, users }) {
 
     //context
     const { user, najdiKorisnikPoMail, novaGrupaMsg, poslednoDodadenMail } = useContext(AuthContext);
-    const { namestiAktivniPoraki, namestiGrupa, grupa, dodajNovaGrupa, grupi } = useContext(ChatContext);
+    const { namestiAktivniPoraki, aktivniPoraki, namestiGrupa, grupa, dodajNovaGrupa, grupi } = useContext(ChatContext);
     const aktivnaGrupa = grupa;
     const [change, setChange] = useState(false);
     const [tempKorisnici, namestiTempKorisnici] = useState([]);
@@ -26,6 +26,10 @@ export default function ChatSide({ poraki, users }) {
         najdiKorisnikPoMail(email);
         setChange(!change);
     }
+
+    useEffect(() => {
+
+    }, [aktivniPoraki])
 
     useEffect(() => {
         if (poslednoDodadenMail) {
@@ -50,11 +54,9 @@ export default function ChatSide({ poraki, users }) {
         if (tempKorisniciIds.includes(user._id) == false) {
             tempKorisniciIds.push(user._id);
         }
-        console.log(grupaNaslov);
         const dodadenaGrupa = await dodajNovaGrupa(tempKorisniciIds.toString(), grupaNaslov);
 
-        console.log(dodadenaGrupa);
-
+       
         if (dodadenaGrupa) {
             namestiNovaGrupaPopup(false);
         }
@@ -129,24 +131,19 @@ export default function ChatSide({ poraki, users }) {
                         if (grupa) {
                             let porakiGrupa = zemiSitePoraki(grupa._id, poraki);
 
-                            console.log(grupa._id);
                             let porakiGrupaTemp = porakiGrupa;
 
                             let poslednaPoraka = {
-                                content: "Нема пораки",
+                                sodrzina: "Нема пораки",
                                 createdAt: "",
                                 updatedAt: "",
-                                isprakjac: ""
+                                isprakjac: "",
+                                procitanoOd: []
                             }
                             if (porakiGrupa.length != 0) poslednaPoraka = porakiGrupa[porakiGrupa.length - 1];
 
                             //user
                             let korisnikPoraka = zemiKorisnikPoraka(poslednaPoraka.isprakjac, users);
-
-                            console.log(poslednaPoraka.isprakjac);
-                            console.log(users);
-                            console.log(korisnikPoraka);
-
 
                             let isprakjacIme = '';
 
@@ -155,7 +152,7 @@ export default function ChatSide({ poraki, users }) {
                             }
 
                             return (
-                                <div key={grupa._id} onClick={() => { namestiAktivniPoraki(porakiGrupaTemp); namestiGrupa(grupa) }} className={`chat-group container-small ${aktivnaGrupa && aktivnaGrupa._id == grupa._id ? 'active' : ''}`}>
+                                <div key={grupa._id} onClick={() => { namestiAktivniPoraki(porakiGrupaTemp); namestiGrupa(grupa) }} className={`chat-group container-small ${aktivnaGrupa && aktivnaGrupa._id == grupa._id ? 'active' : ''} ${poslednaPoraka.procitanoOd.includes(user._id) ? '' : 'new'}`}>
                                     <div className="group-img">
                                         <Avatar size={45} className="radius-half" name={grupa.ime} />
                                     </div>
@@ -169,7 +166,10 @@ export default function ChatSide({ poraki, users }) {
                                             </div>
                                         </div>
                                         <div className="group-right__bottom">
-                                            <p><b>{isprakjacIme ? `${isprakjacIme}: ` : ''}</b> {poslednaPoraka.sodrzina}</p>
+                                            <p><b>{isprakjacIme ? `${isprakjacIme}: ` : ''}</b> {poslednaPoraka && (poslednaPoraka.sodrzina.length > 12 ? `${poslednaPoraka.sodrzina.substr(0, 12)}...` : poslednaPoraka.sodrzina)}</p>
+                                            {
+                                                poslednaPoraka.procitanoOd.includes(user._id) ? '' : (<span>N</span>)
+                                            }
                                         </div>
                                     </div>
                                 </div>

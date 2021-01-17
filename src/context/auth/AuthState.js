@@ -132,7 +132,7 @@ const AuthState = props => {
             namestiNajavenKorisnik(res.data.token);
         } catch (err) {
             if (err) {
-                console.log(err.response);
+                // console.log(err.response);
                 let errorMsg = '';
         
                 if (err.response.data.errors.constructor === Array) {
@@ -186,8 +186,6 @@ const AuthState = props => {
                 }
             })
         } catch (err) {
-            console.log(err);
-            console.log(err.response);
             dispatch({
                 type: SET_NEWCHAT_MSG,
                 payload: {
