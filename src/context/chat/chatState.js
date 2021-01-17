@@ -15,7 +15,8 @@ import {
     SUCCESS_CHANGE_GROUP,
     SET_NEW_GROUP,
     SET_SEEN_MESSAGE,
-    SET_SEEN_GROUP
+    SET_SEEN_GROUP,
+    SET_SEEN_SOCKET
 } from '../types'
 import {setToken} from '../../help/functions'
 
@@ -187,6 +188,18 @@ const ChatState = props => {
         }
     }
 
+    const procitanaPorakaKorisnik = (grupa, korisnik) => {
+        console.log('procitana poraka korisnik: ');
+        console.log(grupa, korisnik);
+
+        dispatch({
+            type: SET_SEEN_SOCKET,
+            payload: {
+                grupa, korisnik
+            }
+        })
+    }
+
 
     return (
         <ChatContext.Provider value={{
@@ -201,6 +214,7 @@ const ChatState = props => {
             namestiNovaGrupa,
             namestiProcitano,
             namestiProcitanaGrupa,
+            procitanaPorakaKorisnik,
             error: state.error,
             poraki: state.poraki,
             grupa: state.grupa,

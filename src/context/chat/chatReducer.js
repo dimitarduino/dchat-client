@@ -12,7 +12,8 @@ import {
     SET_NEW_GROUP,
     SUCCESS_DELETE_MESSAGE,
     SET_SEEN_MESSAGE,
-    SET_SEEN_GROUP
+    SET_SEEN_GROUP,
+    SET_SEEN_SOCKET
 } from '../types'
 
 export default (state, action) => {
@@ -169,6 +170,34 @@ export default (state, action) => {
                 aktivniPoraki: aktivniSoSeen,
                 grupi: promeniGrupi
             }
+        case SET_SEEN_SOCKET:
+            let procitaniPorakiSocket = state.poraki;
+            let aProcitaniPorakiSocket = state.aktivniPoraki;
+
+            procitaniPorakiSocket = procitaniPorakiSocket.map(poraka => {
+                if (poraka.grupa == action.payload.grupa) {
+                    if (poraka.procitanoOd.includes(action.payload.korisnik) == false) {
+                        poraka.procitanoOd.push(action.payload.korisnik);
+                    }
+                }
+                return poraka;
+            });
+
+            aProcitaniPorakiSocket = aProcitaniPorakiSocket.map(poraka => {
+                if (poraka.grupa == action.payload.grupa) {
+                    if (poraka.procitanoOd.includes(action.payload.korisnik) == false) {
+                        poraka.procitanoOd.push(action.payload.korisnik);
+                    }
+                }
+                return poraka;
+            });
+
+            return {
+                ...state,
+                poraki: procitaniPorakiSocket,
+                aktivniPoraki: aProcitaniPorakiSocket
+            }
+        break;
         case SET_SEEN_GROUP:
             let procitaniPoraki = state.poraki;
             let procitaniAktivniPoraki = state.aktivniPoraki;

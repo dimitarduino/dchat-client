@@ -9,8 +9,9 @@ import ChatContext from '../context/chat/chatContext'
 import Messages from './Messages';
 import Members from './Members';
 
+
 //sockets
-import { ispratiPorakaSocket } from '../help/sockets'
+import { ispratiPorakaSocket, procitanoSocket } from '../help/sockets'
 
 export default function ChatRight() {
     const [poraka, namestiPoraka] = useState("");
@@ -64,21 +65,22 @@ export default function ChatRight() {
     }
 
     const namestiProcitaniPoraki = () => {
-        console.log(user._id);
         let poslednaPoraka = aktivniPoraki[aktivniPoraki.length - 1];
 
         if (!!poslednaPoraka && !!poslednaPoraka._id) {
             if (poslednaPoraka.procitanoOd.includes(user._id)) {
                 console.log('vekje ja procital');
             } else {
-                namestiProcitano(user._id, poslednaPoraka._id);
+                procitanoSocket(grupa._id, user._id, function() {
+                    namestiProcitano(user._id, poslednaPoraka._id);
+                })
             }
         } else {
             if (!!poslednaPoraka) {
                 if (grupa) {
-                    console.log('grupa e:');
-                    console.log(grupa);
-                    namestiProcitanaGrupa(grupa._id, user._id);
+                    procitanoSocket(grupa._id, user._id, function() {
+                        namestiProcitanaGrupa(grupa._id, user._id);
+                    })
                 }
             }
             console.log('nema nisto');
@@ -135,9 +137,9 @@ export default function ChatRight() {
                                     <RiSendPlane2Line size={23} />
                                 </button>
                             </form>
-                            <form className="img-pick" action="">
+                            {/* <form className="img-pick" action="">
                                 <input type="file" name="" id="" />
-                            </form>
+                            </form> */}
                         </div>
     
                     )

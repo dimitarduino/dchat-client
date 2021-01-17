@@ -11,12 +11,12 @@ import { inicijalizirajSocket, pretplataChat, vleziVoGrupi } from '../help/socke
 export default function Main() {
     const [chats, setChats] = useState([]);
     const [siteGrupi, namestiSiteGrupi] = useState([]);
-    const {grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi} = useContext(ChatContext);
+    const {grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi, procitanaPorakaKorisnik} = useContext(ChatContext);
     const { user, users, citajKorisnici, setChanging } = useContext(AuthContext);
     
     useEffect(() => {
             inicijalizirajSocket();
-            pretplataChat(vmetniPoraka);
+            pretplataChat(vmetniPoraka, procitanaPorakaKorisnik);
 
             return () => {
 

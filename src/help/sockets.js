@@ -7,15 +7,25 @@ export const inicijalizirajSocket = (grupa) => {
 export const diskonektirajSocket = () => {
   if(socket) socket.disconnect();
 }
-export const pretplataChat = (cb) => {
-  console.log('pretplata');
+export const pretplataChat = (cbNovaPoraka, cbProcitanaPoraka) => {
   if (!socket) return(true);
   socket.on('nacrtajPoraka', (sodrzina, grupa, isprakjac) => {
-   console.log('nova poraka');
-    return cb({
+  //  console.log('nova poraka');
+    return cbNovaPoraka({
       grupa, sodrzina, isprakjac
     });
   });
+
+  socket.on("seenPoraka", (grupa, korisnik) => {
+    cbProcitanaPoraka(grupa, korisnik);
+  })
+}
+
+export const procitanoSocket = (grupa, korisnik, cb = null) => {
+  socket.emit("seen", grupa, korisnik);
+  if (cb) {
+    cb();
+  }
 }
 
 export const vleziVoGrupi = (grupi, userId) => {

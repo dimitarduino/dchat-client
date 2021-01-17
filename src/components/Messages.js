@@ -1,12 +1,13 @@
-import React, {useState, useContext, useRef, useEffect} from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import Avatar from 'react-avatar'
 import moment from 'moment'
 
-import AuthContext from '../context/auth/AuthContext' 
-import ChatContext from '../context/chat/chatContext' 
+import AuthContext from '../context/auth/AuthContext'
+import ChatContext from '../context/chat/chatContext'
+import { zemiKorisnikPoraka } from '../help/functions'
 
 
-export default function Messages({user}) {
+export default function Messages({ user }) {
     const messagesEndRef = React.useRef(null);
     const { aktivniPoraki, grupa } = useContext(ChatContext);
     const { users } = useContext(AuthContext);
@@ -21,7 +22,19 @@ export default function Messages({user}) {
     return (
         <div className="chat-messages-wrap container-small">
             {
-                 aktivniPoraki.map(poraka => {
+                aktivniPoraki.map((poraka, indexPoraka) => {
+                    let procitanoOd = [];
+                    let procitanoOdTxt = "";
+                    poraka.procitanoOd.forEach(function (korisnikId) {
+                        let korisnikTemp = zemiKorisnikPoraka(korisnikId, users);
+
+                        if (procitanoOd.includes(korisnikTemp) === false && korisnikTemp._id != user._id) {
+                            procitanoOd.push(korisnikTemp);
+                        }
+                    })
+
+                    procitanoOdTxt = procitanoOd.map(tk => ` ${tk.ime}`);
+
                     let classMessage = "";
 
                     let userInfo = users.filter(userTemp => userTemp._id == poraka.isprakjac);
@@ -40,7 +53,16 @@ export default function Messages({user}) {
                                         <p>{poraka.sodrzina}</p>
                                     </div>
                                     <div className="chat-time">
-                                        <p>{moment(poraka.createdAt).format("HH:mm, DD/MM/YYYY")}</p>
+                                        <p>{
+                                            (indexPoraka == aktivniPoraki.length - 1 && procitanoOd.length != 0)? (
+                                                <span>
+                                                    &#10003;{procitanoOdTxt}
+                                                </span>
+                                            ) 
+                                             : `${moment(poraka.createdAt).format("HH:mm, DD/MM/YYYY")}` 
+                                            }
+                                        </p>
+                                        <span></span>
                                     </div>
                                 </div>
                             </div>
