@@ -30,7 +30,6 @@ export const zemiSiteGrupi = (userId, grupi) => {
 }
 
 export const zemiSitePoraki = (grupa, poraki) => {
-    console.log(poraki);
     if (poraki) {
         return poraki.filter(poraka => poraka.grupa === grupa);
     } else {

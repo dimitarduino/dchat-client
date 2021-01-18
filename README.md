@@ -1,70 +1,20 @@
-# Getting Started with Create React App
+# Семинарска работа: Веб chat апликација (MERN STACK): Клиентски дел
+За да биде функционален клиентскиот дел, прво мора да биде стартуван серверскиот дел за проектот, кој се наоѓа на линкот: https://github.com/dimitarduino/dchat-client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Хостинг
+Покрај начинот за локално стартување на апликацијата, апликацијата е хостирана со автоматски deploy (при commit во master, автоматски се обновува најновата верзија) на линкот: https://dchat-client.netlify.app/
+Исто така хостирана е и на dockerhub: https://hub.docker.com/repository/docker/dimitarduino/dchat-client
 
-## Available Scripts
+# Постапки во терминал за старт на клиентскиот дел:
+1. git clone https://github.com/dimitarduino/dchat-client
+2. cd dchat-client 
+3. npm install
+4. npm start
 
-In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Постапки за работа на апликацијата: 
+1. Потребна е регистрација и најава за да влезете во Вашиот профил.
+2. Потоа со клик на копчето за нова порака, се отвора прозорец каде треба да ги напишете email адресите на сите останати членови што сакате да бидат во креираната група (можно е само додавање на корисници што веќе имаат профил во апликацијата - регистрирани корисници) и име на групата.
+3. По креирање на група, корисниците во групата, може да праќаат пораки меѓусебно (реализирано со веб сокети и база на податоци (mongodb)) - Првично секоја порака се праќа преку веб сокет до сите корисници во таа група, а потоа се запишува и во база на податоци.
+4. Искористени се react hooks наместо redux како state management
+5. Функциите во кои има барања (requests) до серверскиот дел се наоѓаат во src/context/{chat,auth}/{chatState,authState}, кои после запишување во база, преку одредени акции во reducer-ите (src/context/{chat,auth}/{chatReducer,authReducer}) прават промени во локалниот state, за да нема потреба повеќекратно да се читаат податоци од базата.
