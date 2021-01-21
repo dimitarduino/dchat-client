@@ -11,34 +11,34 @@ import { inicijalizirajSocket, pretplataChat, vleziVoGrupi } from '../help/socke
 export default function Main() {
     const [chats, setChats] = useState([]);
     const [siteGrupi, namestiSiteGrupi] = useState([]);
-    const {grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi, procitanaPorakaKorisnik} = useContext(ChatContext);
+    const { grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi, procitanaPorakaKorisnik } = useContext(ChatContext);
     const { user, users, citajKorisnici, setChanging } = useContext(AuthContext);
-    
+
     useEffect(() => {
-            inicijalizirajSocket();
-            pretplataChat(vmetniPoraka, procitanaPorakaKorisnik);
+        inicijalizirajSocket();
+        pretplataChat(vmetniPoraka, procitanaPorakaKorisnik);
 
-            return () => {
+        return () => {
 
-            }
+        }
     }, []);
 
-    useEffect(() => {    
+    useEffect(() => {
         async function zemiGrupiAsync() {
             const grupi = await zemiGrupi(user._id);
         }
-        
+
         zemiGrupiAsync();
-        
+
     }, []);
 
     useEffect(() => {
         console.log('se smena refresh grupi');
-        const zemiGrupiAsync = async() => {
+        const zemiGrupiAsync = async () => {
             await zemiGrupi(user._id);
         }
         if (osveziGrupi) {
-        console.log('se smena refresh grupi -true');
+            console.log('se smena refresh grupi -true');
 
             zemiGrupiAsync();
         }

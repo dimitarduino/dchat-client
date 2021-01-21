@@ -10,7 +10,7 @@ import { zemiKorisnikPoraka } from '../help/functions'
 export default function Messages({ user }) {
     const messagesEndRef = React.useRef(null);
     const { aktivniPoraki, grupa } = useContext(ChatContext);
-    const { users } = useContext(AuthContext);
+    const { users, citajKorisnici } = useContext(AuthContext);
 
     const SkrolajNajdolu = () => {
         const elementRef = useRef();
@@ -28,9 +28,14 @@ export default function Messages({ user }) {
                     poraka.procitanoOd.forEach(function (korisnikId) {
                         let korisnikTemp = zemiKorisnikPoraka(korisnikId, users);
 
-                        if (procitanoOd.includes(korisnikTemp) === false && korisnikTemp._id != user._id) {
-                            procitanoOd.push(korisnikTemp);
+                        if (korisnikTemp) {
+                            if (procitanoOd.includes(korisnikTemp) === false && korisnikTemp._id != user._id) {
+                                procitanoOd.push(korisnikTemp);
+                            }
+                        } else {
+                            citajKorisnici();
                         }
+
                     })
 
                     procitanoOdTxt = procitanoOd.map(tk => ` ${tk.ime}`);

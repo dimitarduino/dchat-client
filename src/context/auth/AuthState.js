@@ -22,10 +22,8 @@ const AuthState = props => {
 
     const citajKorisnici = async (users) => {
         try {
-            const res = await axios.get('/register/users', {
-                params: {
+            const res = await axios.post('/register/users', {
                     users
-                }
             });
 
             dispatch({

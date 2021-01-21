@@ -93,9 +93,6 @@ const ChatState = props => {
         var { grupa, sodrzina, isprakjac } = poraka;
         poraka.procitanoOd = [isprakjac];
 
-        console.log(state.poraki);
-        console.log(state.aktivniPoraki);
-        
         dispatch({
             type: SUCCESS_ADD_MESSAGE,
             payload: poraka

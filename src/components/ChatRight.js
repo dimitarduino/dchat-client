@@ -47,6 +47,7 @@ export default function ChatRight() {
                 daliENovaGrupa = true;
             }
 
+            console.log(grupa.korisnici);
             ispratiPorakaSocket(grupa._id, poraka, user._id, kreirajPoraka, grupa.korisnici, daliENovaGrupa);
 
             namestiNovaGrupa(false);
