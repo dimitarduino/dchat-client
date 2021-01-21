@@ -46,6 +46,7 @@ export default function Messages({ user }) {
 
                     userInfo = userInfo[0];
 
+                    if (userInfo) {
                     if (poraka.isprakjac == user._id) classMessage = 'me';
                     if (poraka.grupa == grupa._id) {
                         return (
@@ -73,6 +74,7 @@ export default function Messages({ user }) {
                             </div>
                         )
                     }
+                }
                 })
             }
 

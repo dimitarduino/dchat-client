@@ -28,6 +28,8 @@ export default function ChatRight() {
         if (grupa) {
             namestiImeGrupa(grupa.ime);
         }
+        console.log('promeneto grupa');
+        console.log(grupa);
     }, [grupa]);
 
     const promeniImeGrupa = async () => {

@@ -132,11 +132,12 @@ const AuthState = props => {
             if (err) {
                 // console.log(err.response);
                 let errorMsg = '';
-        
-                if (err.response.data.errors.constructor === Array) {
-                    errorMsg = err.response.data.errors[0].msg;
-                } else {
-                    errorMsg = err.response.data.errors.msg;
+                if (err.response) {
+                    if (err.response.data.errors.constructor === Array) {
+                        errorMsg = err.response.data.errors[0].msg;
+                    } else {
+                        errorMsg = err.response.data.errors.msg;
+                    }
                 }
                 if (err.response) {
                     dispatch({
