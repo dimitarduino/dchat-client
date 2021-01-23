@@ -10,8 +10,13 @@ export default function PrivateRoute() {
 
     useEffect(() => {
         async function namestiKorisnik(token) {
-            const loggedIn = await namestiNajavenKorisnik(token);
-            setLoading(false);
+            try {
+                const loggedIn = await namestiNajavenKorisnik(token);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                setLoading(false);
+            }
         }
 
         let token = "";

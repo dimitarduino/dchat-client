@@ -13,7 +13,7 @@ export default function Main() {
     const [siteGrupi, namestiSiteGrupi] = useState([]);
     const { grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi, procitanaPorakaKorisnik } = useContext(ChatContext);
     const { user, users, citajKorisnici, setChanging } = useContext(AuthContext);
-
+    
     useEffect(() => {
         inicijalizirajSocket();
         pretplataChat(vmetniPoraka, procitanaPorakaKorisnik);
@@ -64,6 +64,8 @@ export default function Main() {
             namestiSiteGrupi(zemiSiteGrupi(user._id, grupi));
 
             vleziVoGrupi(grupi, user._id);
+        } else {
+            vleziVoGrupi([], user._id)
         }
     }, [grupi]);
 
