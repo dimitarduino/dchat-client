@@ -5,6 +5,7 @@ import { AiFillSetting } from 'react-icons/ai'
 import ChatContext from '../context/chat/chatContext'
 import AuthContext from '../context/auth/AuthContext'
 import { zemiKorisnik } from '../help/functions';
+import { izbrisanKorisnik } from '../help/sockets'
 
 export default function Members() {
     const { grupa, izmeniGrupa, namestiNovaGrupa } = useContext(ChatContext);
@@ -45,10 +46,7 @@ export default function Members() {
 
             for (let i = 0; i < grupa.korisnici.length; i++) {
                 for (let j = 0; j < users.length; j++) {
-                    console.log(users[j]._id);
-                    console.log(grupa.korisnici[i]);
                     if (grupa.korisnici[i] == users[j]._id) {
-                        console.log('isto e');
                         tmails.push({
                             id: users[j]._id,
                             email: users[j].email
@@ -80,6 +78,32 @@ export default function Members() {
 
         await izmeniGrupa(grupa._id, grupaNaslov, korisnici);
 
+        let izbrisaniKorisnici = [];
+
+        for (let i = 0; i < grupa.korisnici.length; i++) {
+            let najdeno = false;
+            for (let j = 0; j < korisnici.length; j++) {
+                if (grupa.korisnici[i] == korisnici[j]) {
+                    najdeno = true;
+                }
+            }
+
+            if (najdeno == false) {
+                izbrisaniKorisnici.push(grupa.korisnici[i]);
+            }
+        }   
+
+        console.log(grupa.korisnici);
+        console.log(korisnici);
+
+        console.log('izbrisani korisnici se:');
+        console.log(izbrisaniKorisnici);
+        console.log('izbrisani korisnici se');
+
+        for (let izb = 0; izb < izbrisaniKorisnici.length; izb++) {
+            izbrisanKorisnik(izbrisaniKorisnici[izb], grupa._id);
+        }
+
         namestiSemenuva(false);
         namestiNovaGrupa(true);
     }
@@ -97,9 +121,9 @@ export default function Members() {
                                 <Avatar className="avatar" size="30" name={`${user.ime}`} />
                                 <span className="member-name">{user.ime} {user.prezime}</span>
                             </div>
-                            <div onClick={() => namestiSemenuva(true)} className="member-right">
+                            {/* <div onClick={() => namestiSemenuva(true)} className="member-right">
                                 <AiFillSetting color="#444" size="20" />
-                            </div>
+                            </div> */}
                         </div>
                     )
                 })
@@ -121,7 +145,7 @@ export default function Members() {
                                 <div className="list">
                                     {
                                         tempKorisnici.map(tempkorisnik => (
-                                        <div className="item">
+                                        <div key={tempkorisnik._id ? tempkorisnik._id : tempkorisnik.id} className="item">
                                             <p>{tempkorisnik.email}</p>
                                             <span onClick={() => otstraniOdTemp(tempkorisnik)}>&#10005;</span>
                                         </div>

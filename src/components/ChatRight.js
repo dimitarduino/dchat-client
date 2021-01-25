@@ -28,8 +28,6 @@ export default function ChatRight() {
         if (grupa) {
             namestiImeGrupa(grupa.ime);
         }
-        console.log('promeneto grupa');
-        console.log(grupa);
     }, [grupa]);
 
     const promeniImeGrupa = async () => {
@@ -49,7 +47,6 @@ export default function ChatRight() {
                 daliENovaGrupa = true;
             }
 
-            console.log(grupa.korisnici);
             ispratiPorakaSocket(grupa._id, poraka, user._id, kreirajPoraka, grupa.korisnici, daliENovaGrupa);
 
             namestiNovaGrupa(false);
@@ -72,7 +69,6 @@ export default function ChatRight() {
 
         if (!!poslednaPoraka && !!poslednaPoraka._id) {
             if (poslednaPoraka.procitanoOd.includes(user._id)) {
-                console.log('vekje ja procital');
             } else {
                 procitanoSocket(grupa._id, user._id, function() {
                     namestiProcitano(user._id, poslednaPoraka._id);
@@ -86,7 +82,6 @@ export default function ChatRight() {
                     })
                 }
             }
-            console.log('nema nisto');
         }
     }
 

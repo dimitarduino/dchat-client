@@ -21,16 +21,18 @@ const AuthState = props => {
     const [state, dispatch] = useReducer(authReducer, initState);
 
     const citajKorisnici = async (users) => {
-        try {
-            const res = await axios.post('/register/users', {
+        if (users) {
+            try {
+                const res = await axios.post('/register/users', {
                     users
-            });
-
-            dispatch({
-                type: SET_USERS,
-                payload: res.data.users
-            })
-        } catch (err) {
+                });
+    
+                dispatch({
+                    type: SET_USERS,
+                    payload: res.data.users
+                })
+            } catch (err) {
+            }
         }
     }
 

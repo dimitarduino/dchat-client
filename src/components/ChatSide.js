@@ -129,7 +129,7 @@ export default function ChatSide({ poraki, users }) {
                 {
                     grupi.map(grupa => {
                         if (grupa) {
-                            let porakiGrupa = zemiSitePoraki(grupa._id, poraki);
+                            let porakiGrupa = zemiSitePoraki(grupa, poraki);
 
                             let porakiGrupaTemp = porakiGrupa;
 
@@ -150,6 +150,9 @@ export default function ChatSide({ poraki, users }) {
                             if (korisnikPoraka) {
                                 isprakjacIme = korisnikPoraka.ime;
                             }
+
+                            console.log(poslednaPoraka);
+                            console.log(grupa);
 
                             return (
                                 <div key={grupa._id} onClick={() => { namestiAktivniPoraki(porakiGrupaTemp); namestiGrupa(grupa) }} className={`chat-group container-small ${aktivnaGrupa && aktivnaGrupa._id == grupa._id ? 'active' : ''} ${poslednaPoraka.procitanoOd.includes(user._id) ? '' : 'new'}`}>

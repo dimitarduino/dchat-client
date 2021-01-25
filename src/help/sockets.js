@@ -10,7 +10,6 @@ export const diskonektirajSocket = () => {
 export const pretplataChat = (cbNovaPoraka, cbProcitanaPoraka) => {
   if (!socket) return(true);
   socket.on('nacrtajPoraka', (sodrzina, grupa, isprakjac) => {
-   console.log('nova poraka: ' + sodrzina);
     return cbNovaPoraka({
       grupa, sodrzina, isprakjac
     });
@@ -18,7 +17,13 @@ export const pretplataChat = (cbNovaPoraka, cbProcitanaPoraka) => {
 
   socket.on("seenPoraka", (grupa, korisnik) => {
     cbProcitanaPoraka(grupa, korisnik);
-  })
+  });
+
+  // socket.on('izbrisanKorisnikServer', (grupa) => {
+  //   socket.emit('izbrisanKorisnikClient', grupa);
+
+  //   cbIzbrisanKorisnik(true, grupa);
+  // });
 }
 
 export const procitanoSocket = (grupa, korisnik, cb = null) => {
@@ -26,6 +31,10 @@ export const procitanoSocket = (grupa, korisnik, cb = null) => {
   if (cb) {
     cb();
   }
+}
+
+export const izbrisanKorisnik = (korisnik, grupa) => {
+  socket.emit("izbrisanKorisnik", korisnik, grupa);
 }
 
 export const vleziVoGrupi = (grupi, userId) => {

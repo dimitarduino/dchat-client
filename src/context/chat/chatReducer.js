@@ -13,7 +13,8 @@ import {
     SUCCESS_DELETE_MESSAGE,
     SET_SEEN_MESSAGE,
     SET_SEEN_GROUP,
-    SET_SEEN_SOCKET
+    SET_SEEN_SOCKET,
+    SET_REFRESH_GROUPS
 } from '../types'
 
 export default (state, action) => {
@@ -234,6 +235,19 @@ export default (state, action) => {
                 aktivniPoraki: procitaniAktivniPoraki
             }
         break;
+        case SET_REFRESH_GROUPS:
+            let aktivniPorakiOsveziG = state.aktivniPoraki;
+            let grupaOsveziG = state.grupa;
+            if (action.payload.grupa == state.grupa) {
+                aktivniPorakiOsveziG = [];
+                grupaOsveziG = null;
+            }
+            return {
+                ...state,
+                osveziGrupi: action.payload.osvezi,
+                aktivniPoraki: aktivniPorakiOsveziG,
+                grupa: grupaOsveziG
+            }
         default:
             return state;
     }
