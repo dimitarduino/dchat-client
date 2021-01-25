@@ -97,9 +97,9 @@ export default function Members() {
                                 <Avatar className="avatar" size="30" name={`${user.ime}`} />
                                 <span className="member-name">{user.ime} {user.prezime}</span>
                             </div>
-                            <div onClick={() => namestiSemenuva(true)} className="member-right">
+                            {/* <div onClick={() => namestiSemenuva(true)} className="member-right">
                                 <AiFillSetting color="#444" size="20" />
-                            </div>
+                            </div> */}
                         </div>
                     )
                 })
