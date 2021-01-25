@@ -11,9 +11,9 @@ import { inicijalizirajSocket, pretplataChat, vleziVoGrupi } from '../help/socke
 export default function Main() {
     const [chats, setChats] = useState([]);
     const [siteGrupi, namestiSiteGrupi] = useState([]);
-    const { grupi, grupa, vmetniPoraka, zemiGrupi, poraki, namestiGrupa, zemiPoraki, osveziGrupi, namestiOsveziGrupi, procitanaPorakaKorisnik, namestiAktivniPoraki } = useContext(ChatContext);
+    const { grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi, procitanaPorakaKorisnik } = useContext(ChatContext);
     const { user, users, citajKorisnici, setChanging } = useContext(AuthContext);
-    
+
     useEffect(() => {
         inicijalizirajSocket();
         pretplataChat(vmetniPoraka, procitanaPorakaKorisnik);
@@ -29,6 +29,7 @@ export default function Main() {
         }
 
         zemiGrupiAsync();
+
     }, []);
 
     useEffect(() => {
@@ -64,7 +65,7 @@ export default function Main() {
 
             vleziVoGrupi(grupi, user._id);
         } else {
-            vleziVoGrupi([], user._id)
+            vleziVoGrupi([], user._id);    
         }
     }, [grupi]);
 

@@ -31,7 +31,7 @@ export const zemiSiteGrupi = (userId, grupi) => {
 
 export const zemiSitePoraki = (grupa, poraki) => {
     if (poraki) {
-        return poraki.filter(poraka => (poraka.grupa === grupa._id && grupa.korisnici.includes(poraka.isprakjac)));
+        return poraki.filter(poraka => poraka.grupa === grupa);
     } else {
         return [];
     }

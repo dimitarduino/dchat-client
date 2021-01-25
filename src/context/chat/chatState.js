@@ -16,8 +16,7 @@ import {
     SET_NEW_GROUP,
     SET_SEEN_MESSAGE,
     SET_SEEN_GROUP,
-    SET_SEEN_SOCKET,
-    SET_REFRESH_GROUPS
+    SET_SEEN_SOCKET
 } from '../types'
 import {setToken} from '../../help/functions'
 
@@ -37,16 +36,6 @@ const ChatState = props => {
         dispatch({
             type: SET_GROUP,
             payload: grupaId
-        })
-    }
-
-    const namestiOsveziGrupi = (osvezi, grupa) => {
-        dispatch({
-            type: SET_REFRESH_GROUPS,
-            payload: {
-                osvezi,
-                grupa
-            }
         })
     }
 
@@ -171,12 +160,10 @@ const ChatState = props => {
 
             return true;
         } catch (err) {
-            if (err.response) {
-                let errorMsg = err.response.data.errors[0].msg;
-                alert(errorMsg);
-    
-                return false;
-            }
+            let errorMsg = err.response.data.errors[0].msg;
+            alert(errorMsg);
+
+            return false;
         }
     }
 
@@ -225,7 +212,6 @@ const ChatState = props => {
             namestiProcitano,
             namestiProcitanaGrupa,
             procitanaPorakaKorisnik,
-            namestiOsveziGrupi,
             error: state.error,
             poraki: state.poraki,
             grupa: state.grupa,
