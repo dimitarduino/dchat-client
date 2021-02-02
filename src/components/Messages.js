@@ -33,6 +33,7 @@ export default function Messages({ user }) {
                                 procitanoOd.push(korisnikTemp);
                             }
                         } else {
+                            let korisniciNovi = users.map(user => user._id);
                             citajKorisnici();
                         }
 

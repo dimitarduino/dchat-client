@@ -1,4 +1,4 @@
-import { SET_USER, SET_USERS, SET_NEWCHAT_MSG, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, SET_CHANGING,  CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_SUCCESS } from '../types'
+import { SET_USER, SET_USERS, SET_NEWCHAT_MSG, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, SET_CHANGING,  CHANGE_PASSWORD_ERROR, CHANGE_PASSWORD_SUCCESS, SET_NEW_GROUP_MSG } from '../types'
 
 export default (state, action) => {
     switch (action.type) {
@@ -16,6 +16,11 @@ export default (state, action) => {
                 user: null,
                 sepromenuvaLozinka: false,
                 errors: null,
+            }
+        case SET_NEW_GROUP_MSG:
+            return {
+                ...state,
+                novaGrupaMsg: action.payload
             }
         case FAIL_REGISTER:
         case FAIL_LOGIN:

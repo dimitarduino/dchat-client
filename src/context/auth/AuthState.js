@@ -3,7 +3,7 @@ import axios from '../../axios'
 
 import AuthContext from './AuthContext'
 import authReducer from './AuthReducer'
-import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_ERROR, SET_CHANGING, SET_NEWCHAT_MSG } from '../types'
+import { SET_USER, SET_USERS, LOGOUT_USER, AUTH_ERROR, SUCCESS_REGISTER, FAIL_REGISTER, SUCCESS_LOGIN, FAIL_LOGIN, SET_ERROR, CLEAR_ERROR, CHANGE_PASSWORD_SUCCESS, CHANGE_PASSWORD_ERROR, SET_CHANGING, SET_NEW_GROUP_MSG, SET_NEWCHAT_MSG } from '../types'
 import { setToken } from '../../help/functions'
 
 const AuthState = props => {
@@ -32,6 +32,13 @@ const AuthState = props => {
             })
         } catch (err) {
         }
+    }
+
+    const namestiNovaGrupaMsg = (msg) => {
+        dispatch({
+            type: SET_NEW_GROUP_MSG,
+            payload: msg
+        })
     }
 
     const setError = err => {
@@ -214,7 +221,8 @@ const AuthState = props => {
             setError,
             promeniLozinka,
             setChanging,
-            najdiKorisnikPoMail
+            najdiKorisnikPoMail,
+            namestiNovaGrupaMsg
         }}>
             {props.children}
         </AuthContext.Provider>

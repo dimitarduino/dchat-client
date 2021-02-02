@@ -11,12 +11,16 @@ import { inicijalizirajSocket, pretplataChat, vleziVoGrupi } from '../help/socke
 export default function Main() {
     const [chats, setChats] = useState([]);
     const [siteGrupi, namestiSiteGrupi] = useState([]);
-    const { grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi, procitanaPorakaKorisnik } = useContext(ChatContext);
+    const { grupi, grupa, vmetniPoraka, zemiGrupi, poraki, zemiPoraki, osveziGrupi, procitanaPorakaKorisnik, namestiAktivniPoraki, namestiGrupa } = useContext(ChatContext);
     const { user, users, citajKorisnici, setChanging } = useContext(AuthContext);
 
     useEffect(() => {
         inicijalizirajSocket();
-        pretplataChat(vmetniPoraka, procitanaPorakaKorisnik);
+        pretplataChat(vmetniPoraka, procitanaPorakaKorisnik, async function() {
+        await zemiGrupi(user._id);
+        namestiAktivniPoraki([])
+        namestiGrupa(null);
+        });
 
         return () => {
 
@@ -60,7 +64,9 @@ export default function Main() {
                 })
             });
 
-            citajKorisnici(korisniciTemp.toString());
+            console.log(korisniciTemp);
+
+            citajKorisnici();
             namestiSiteGrupi(zemiSiteGrupi(user._id, grupi));
 
             vleziVoGrupi(grupi, user._id);

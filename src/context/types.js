@@ -9,6 +9,7 @@ export const SUCCESS_LOGIN = "SUCCESS_LOGIN";
 export const FAIL_LOGIN = "FAIL_LOGINR";
 export const SET_ERROR = "SET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
+export const SET_NEW_GROUP_MSG = "SET_NEW_GROUP_MSG";
 
 //Promeni lozinka
 export const CHANGE_PASSWORD_SUCCESS = "CHANGE_PASSWORD_SUCCESS";

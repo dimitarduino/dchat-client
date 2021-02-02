@@ -14,7 +14,7 @@ export default function ChatSide({ poraki, users }) {
     const [email, namestiEmail] = useState('');
 
     //context
-    const { user, najdiKorisnikPoMail, novaGrupaMsg, poslednoDodadenMail } = useContext(AuthContext);
+    const { user, najdiKorisnikPoMail, novaGrupaMsg, namestiNovaGrupaMsg, poslednoDodadenMail } = useContext(AuthContext);
     const { namestiAktivniPoraki, aktivniPoraki, namestiGrupa, grupa, dodajNovaGrupa, grupi } = useContext(ChatContext);
     const aktivnaGrupa = grupa;
     const [change, setChange] = useState(false);
@@ -59,6 +59,9 @@ export default function ChatSide({ poraki, users }) {
        
         if (dodadenaGrupa) {
             namestiNovaGrupaPopup(false);
+            namestiTempKorisnici([]);
+            namestiGrupaNaslov("");
+            namestiNovaGrupaMsg('');
         }
     }
 

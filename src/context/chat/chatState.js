@@ -2,6 +2,7 @@ import React, { useReducer } from 'react'
 import axios from '../../axios'
 import ChatContext from './chatContext'
 import chatReducer from './chatReducer'
+import { izbrisanKorisnik } from '../../help/sockets'  
 import {
     SET_ERROR,
     CLEAR_ERROR,
@@ -127,12 +128,18 @@ const ChatState = props => {
     }
 
 
-    const izmeniGrupa = async (grupaId, ime = null, korisnici = null) => {
+    const izmeniGrupa = async (grupaId, ime = null, korisnici = null, izbrisaniKorisnici = []) => {
         try {
             const res = await axios.post(`/groups/${grupaId}`, {
                 korisnici,
                 ime
             })
+
+            if (izbrisaniKorisnici.length > 0) {
+                for (let izb = 0; izb < izbrisaniKorisnici.length; izb++) {
+                    izbrisanKorisnik(izbrisaniKorisnici[izb], grupaId);
+                }
+            }
 
             dispatch({
                 type: SUCCESS_CHANGE_GROUP,

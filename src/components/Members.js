@@ -5,6 +5,7 @@ import { AiFillSetting } from 'react-icons/ai'
 import ChatContext from '../context/chat/chatContext'
 import AuthContext from '../context/auth/AuthContext'
 import { zemiKorisnik } from '../help/functions';
+import { izbrisanKorisnik } from '../help/sockets';
 
 export default function Members() {
     const { grupa, izmeniGrupa, namestiNovaGrupa } = useContext(ChatContext);
@@ -78,10 +79,31 @@ export default function Members() {
             return rmId;
         });
 
-        await izmeniGrupa(grupa._id, grupaNaslov, korisnici);
+        let izbrisaniKorisnici = [];
 
+        for (let i = 0; i < grupa.korisnici.length; i++) {
+            let najdeno = false;
+            for (let j = 0; j < korisnici.length; j++) {
+                if (grupa.korisnici[i] == korisnici[j]) {
+                    najdeno = true;
+                }
+            }
+
+            if (najdeno == false) {
+                izbrisaniKorisnici.push(grupa.korisnici[i]);
+            }
+        }   
+console.log('ova se izbrisani korisnici');
+        console.log(izbrisaniKorisnici);
+console.log('ova se izbrisani korisnici');
+
+       
+
+        await izmeniGrupa(grupa._id, grupaNaslov, korisnici, izbrisaniKorisnici);
         namestiSemenuva(false);
         namestiNovaGrupa(true);
+
+
     }
 
 
@@ -97,9 +119,9 @@ export default function Members() {
                                 <Avatar className="avatar" size="30" name={`${user.ime}`} />
                                 <span className="member-name">{user.ime} {user.prezime}</span>
                             </div>
-                            {/* <div onClick={() => namestiSemenuva(true)} className="member-right">
+                            <div onClick={() => namestiSemenuva(true)} className="member-right">
                                 <AiFillSetting color="#444" size="20" />
-                            </div> */}
+                            </div>
                         </div>
                     )
                 })
